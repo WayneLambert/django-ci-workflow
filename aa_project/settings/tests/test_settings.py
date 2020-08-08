@@ -16,5 +16,5 @@ class TestDatabaseIsSecurelyConfigured:
         assert DATABASES['default']['NAME'] == os.environ['DB_NAME']
         assert DATABASES['default']['USER'] == os.environ['DB_USER']
         assert DATABASES['default']['HOST'] == os.environ['DB_HOST']
-        assert DATABASES['default']['PASS'] == os.environ['DB_PASS']
+        assert DATABASES['default']['PASSWORD'] == os.environ['DB_PASS']
         assert DATABASES['default']['PORT'] == os.environ['DB_PORT']
