@@ -1,0 +1,59 @@
+name: Build Docker Images
+
+on:
+  push:
+    branches:
+      - ci
+
+env:
+  WEB_IMAGE: docker.pkg.github.com/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web:latest
+  NGINX_IMAGE: docker.pkg.github.com/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx:latest
+
+jobs:
+
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v1
+
+      - name: Debug Script
+        uses: hmarr/debug-action@v1.0.0
+
+      - name: Set environment variables
+        run: |
+          echo ::set-env name=CODECOV_TOKEN::${{ env.CODECOV_TOKEN }}
+          echo ::set-env name=DATABASE::${{ env.DATABASE }}
+          echo ::set-env name=DB_HOST::${{ env.DB_HOST }}
+          echo ::set-env name=DB_NAME::${{ env.DB_NAME }}
+          echo ::set-env name=DB_PASS::${{ env.DB_PASS }}
+          echo ::set-env name=DB_PORT::${{ env.DB_PORT }}
+          echo ::set-env name=DB_USER::${{ env.DB_USER }}
+          echo ::set-env name=DJANGO_PROJECT_NAME::${{ env.DJANGO_PROJECT_NAME }}
+          echo ::set-env name=POSTGRES_DB::${{ env.POSTGRES_DB }}
+          echo ::set-env name=POSTGRES_HOST::${{ env.POSTGRES_HOST }}
+          echo ::set-env name=POSTGRES_PASSWORD::${{ env.POSTGRES_PASSWORD }}
+          echo ::set-env name=POSTGRES_PORT::${{ env.POSTGRES_PORT }}
+          echo ::set-env name=POSTGRES_USER::${{ env.POSTGRES_USER }}
+          echo ::set-env name=SECRET_KEY::${{ env.SECRET_KEY }}
+          echo ::set-env name=WEB_IMAGE::${{ env.WEB_IMAGE }}
+          echo ::set-env name=NGINX_IMAGE::${{ env.NGINX_IMAGE }}
+
+      - name: Log in to GitHub Packages
+        run: echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull images
+        run: |
+          docker pull ${{ env.WEB_IMAGE }} || true
+          docker pull ${{ env.NGINX_IMAGE }} || true
+
+      - name: Build images
+        run: |
+          docker-compose -f docker-compose.ci.yml build
+      - name: Push images
+        run: |
+          docker push ${{ env.WEB_IMAGE }}
+          docker push ${{ env.NGINX_IMAGE }}
