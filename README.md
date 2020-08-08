@@ -32,9 +32,9 @@ following environment variables in there.
 
 ```.env
 # Django Web App Variables
-SECRET_KEY='y0ur-$€cur€-$€cr€t-k€y'  # Usually 50 alphanumeric characters in length inside of single quotes
+SECRET_KEY='y0ur-$€cur€-$€cr€t-k€y'  # Usually 50 alphanumeric chars in length inside of single quotes
 DJANGO_PROJECT_NAME=your_django_project_name  # This is called aa_project in this repo
-DJANGO_ADMIN_LOGIN_PATH=your-chosen-admin-path  # Instead of the standard '/admin/' path, use '/your-chosen-admin-path/'
+DJANGO_ADMIN_LOGIN_PATH=your-admin-path  # Instead of the standard '/admin/' path, use '/your-admin-path/'
 
 # Docker Compose Settings
 COMPOSE_PROJECT_NAME=ci_workflow  # This gives your containers meaningful names
@@ -56,7 +56,7 @@ PYTHONBREAKPOINT=ipdb.set_trace  # Enables Python debugging with iPDB (Python 3.
 
 # Django Database Details / Credentials
 # These are the settings within your `settings.py` file.
-# These are also the settings you use when connecting to your database with database software (e.g. DataGrip)
+# Also the settings useD when connecting to database software (e.g. DataGrip)
 DB_NAME=your_chosen_db_name
 DB_USER=your_username
 DB_PASS=p@ssw0rd
