@@ -21,24 +21,35 @@ jobs:
       - name: Debug Script
         uses: hmarr/debug-action@v1.0.0
 
-      - name: Set environment variables
+      - name: Add Environment Variables to .env file
         run: |
-          echo ::set-env name=CODECOV_TOKEN::${{ env.CODECOV_TOKEN }}
-          echo ::set-env name=DATABASE::${{ env.DATABASE }}
-          echo ::set-env name=DB_HOST::${{ env.DB_HOST }}
-          echo ::set-env name=DB_NAME::${{ env.DB_NAME }}
-          echo ::set-env name=DB_PASS::${{ env.DB_PASS }}
-          echo ::set-env name=DB_PORT::${{ env.DB_PORT }}
-          echo ::set-env name=DB_USER::${{ env.DB_USER }}
-          echo ::set-env name=DJANGO_PROJECT_NAME::${{ env.DJANGO_PROJECT_NAME }}
-          echo ::set-env name=POSTGRES_DB::${{ env.POSTGRES_DB }}
-          echo ::set-env name=POSTGRES_HOST::${{ env.POSTGRES_HOST }}
-          echo ::set-env name=POSTGRES_PASSWORD::${{ env.POSTGRES_PASSWORD }}
-          echo ::set-env name=POSTGRES_PORT::${{ env.POSTGRES_PORT }}
-          echo ::set-env name=POSTGRES_USER::${{ env.POSTGRES_USER }}
-          echo ::set-env name=SECRET_KEY::${{ env.SECRET_KEY }}
-          echo ::set-env name=WEB_IMAGE::${{ env.WEB_IMAGE }}
-          echo ::set-env name=NGINX_IMAGE::${{ env.NGINX_IMAGE }}
+          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          echo DJANGO_PROJECT_NAME=${{ secrets.DJANGO_PROJECT_NAME }} >> .env
+          echo DJANGO_ADMIN_LOGIN_PATH=${{ secrets.DJANGO_ADMIN_LOGIN_PATH }} >> .env
+          echo COMPOSE_PROJECT_NAME=${{ secrets.COMPOSE_PROJECT_NAME }} >> .env
+          echo COMPOSE_HTTP_TIMEOUT=120 >> .env
+          echo DATABASE=${{ secrets.DATABASE }} >> .env
+
+      - name: Add Environment Variables to prod.env file
+        run: |
+          echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> prod.env
+          echo DIGITAL_OCEAN_IP_ADDRESS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> prod.env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> prod.env
+          echo DB_USER=${{ secrets.DB_USER }} >> prod.env
+          echo DB_PASS=${{ secrets.DB_PASS }} >> prod.env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> prod.env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> prod.env
+          echo DATABASE=${{ secrets.DATABASE }} >> prod.env
+          echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> prod.env
+          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> prod.env
+          echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> prod.env
+          echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> prod.env
+          echo POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} >> prod.env
+
+      - name: Source Environment Variables
+        run: |
+          source .env
+          source prod.env
 
       - name: Log in to GitHub Packages
         run: echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
