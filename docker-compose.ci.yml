@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      dockerfile: ./docker/prod/web/Dockerfile
+      context: .
+      cache_from:
+        - "${WEB_IMAGE}"
+    image: "${WEB_IMAGE}"
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    expose:
+      - "8000"
+    env_file:
+      - .env
+    command: gunicorn ${DJANGO_PROJECT_NAME}.wsgi:application --bind 0.0.0.0:8000
+
+  nginx:
+    depends_on:
+      - web
+    build:
+      dockerfile: ./docker/prod/nginx/Dockerfile
+      context: .
+      cache_from:
+        - "${NGINX_IMAGE}"
+    image: "${NGINX_IMAGE}"
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    ports:
+      - "80:80"
+
+volumes:
+  static_volume:
+  media_volume:

@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: ci_workflow_postgres
+    build:
+      context: ./docker/postgres
+    restart: always
+    env_file:
+      - .env
+      - dev.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5434:5432"
+    networks:
+      - backend
+
+  web:
+    container_name: ci_workflow_web
+    depends_on:
+      - postgres
+    build:
+      dockerfile: ./docker/dev/web/Dockerfile
+      context: .
+    restart: always
+    env_file:
+      - .env
+      - dev.env
+    volumes:
+      - .:/code/
+    ports:
+      - "8003:8003"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgres_data:
