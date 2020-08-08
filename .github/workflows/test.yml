@@ -33,6 +33,7 @@ jobs:
           pipenv install --system --ignore-pipfile --deploy --dev
 
       - name: Set Environment variables
+        run: echo "Setting environment variables"
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
