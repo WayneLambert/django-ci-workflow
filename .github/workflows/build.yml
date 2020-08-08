@@ -48,6 +48,7 @@ jobs:
 
       - name: Source Environment Variables
         run: |
+          cd /code
           source .env
           source prod.env
 
