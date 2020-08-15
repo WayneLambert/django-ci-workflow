@@ -1,4 +1,4 @@
-name: Build Docker Images
+name: CI Workflow
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
 jobs:
 
   build:
-    name: Build Docker Images
+    name: CI Workflow
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master
@@ -20,6 +20,36 @@ jobs:
 
       - name: Debug Script
         uses: hmarr/debug-action@v1.0.0
+
+      - name: Build Dev Image
+        run: |
+          docker-compose build
+
+      - name: Docker Compose Up
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: 1
+        run: docker-compose up -d
+
+      - name: Check Running Containers
+        run: docker-compose ps -a
+
+      - name: Check Logs
+        run: docker-compose logs web
+
+      - name: Run Tests and Generate Coverage Report
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: 1
+        run: docker-compose exec web pytest --cov=./ --cov-report=xml
+
+      - name: Upload Coverage Report to Codecov.io
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          flags: unittests
+
+      - name: Docker Compose Down
+        run: docker-compose down
 
       - name: Add Environment Variables to .env file
         run: |
@@ -65,33 +95,11 @@ jobs:
           docker pull ${{ env.WEB_IMAGE }} || true
           docker pull ${{ env.NGINX_IMAGE }} || true
 
-      - name: Build images
+      - name: Build Prod Images
         run: |
           docker-compose -f docker-compose.ci.yml build
-      - name: Push images
+
+      - name: Push Prod Images
         run: |
           docker push ${{ env.WEB_IMAGE }}
           docker push ${{ env.NGINX_IMAGE }}
-
-      - name: Docker Compose Up
-        env:
-          COMPOSE_INTERACTIVE_NO_CLI: 1
-        run: docker-compose up -d
-
-      - name: Check Running Containers
-        run: docker-compose ps -a
-
-      - name: Check Logs
-        run: docker-compose logs web
-
-      - name: Run Tests and Generate Coverage Report
-        env:
-          COMPOSE_INTERACTIVE_NO_CLI: 1
-        run: docker-compose exec web pytest --cov=./ --cov-report=xml
-
-      - name: Upload Coverage Report to Codecov.io
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
-          flags: unittests
