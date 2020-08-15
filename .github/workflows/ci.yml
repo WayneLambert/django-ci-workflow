@@ -21,36 +21,6 @@ jobs:
       - name: Debug Script
         uses: hmarr/debug-action@v1.0.0
 
-      - name: Build Dev Image
-        run: |
-          docker-compose build
-
-      - name: Docker Compose Up
-        env:
-          COMPOSE_INTERACTIVE_NO_CLI: 1
-        run: docker-compose up -d
-
-      - name: Check Running Containers
-        run: docker-compose ps -a
-
-      - name: Check Logs
-        run: docker-compose logs web
-
-      - name: Run Tests and Generate Coverage Report
-        env:
-          COMPOSE_INTERACTIVE_NO_CLI: 1
-        run: docker-compose exec web pytest --cov=./ --cov-report=xml
-
-      - name: Upload Coverage Report to Codecov.io
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
-          flags: unittests
-
-      - name: Docker Compose Down
-        run: docker-compose down
-
       - name: Add Environment Variables to .env file
         run: |
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
@@ -84,6 +54,36 @@ jobs:
         run: |
           echo ::set-env name=WEB_IMAGE::${{ env.WEB_IMAGE }}
           echo ::set-env name=NGINX_IMAGE::${{ env.NGINX_IMAGE }}
+
+      - name: Build Dev Image
+        run: |
+          docker-compose build
+
+      - name: Docker Compose Up
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: 1
+        run: docker-compose up -d
+
+      - name: Check Running Containers
+        run: docker-compose ps -a
+
+      - name: Check Logs
+        run: docker-compose logs web
+
+      - name: Run Tests and Generate Coverage Report
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: 1
+        run: docker-compose exec web pytest --cov=./ --cov-report=xml
+
+      - name: Upload Coverage Report to Codecov.io
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          flags: unittests
+
+      - name: Docker Compose Down
+        run: docker-compose down
 
       - name: Log in to GitHub Packages
         run: echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
