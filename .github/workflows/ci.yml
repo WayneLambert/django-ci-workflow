@@ -39,11 +39,6 @@ jobs:
           echo DB_HOST=${{ secrets.DB_HOST }} >> dev.env
           echo DB_PORT=${{ secrets.DB_PORT }} >> dev.env
 
-      - name: Source Environment Variables
-        run: |
-          source .env
-          source dev.env
-
       - name: Build Dev Image
         run: |
           docker-compose build
