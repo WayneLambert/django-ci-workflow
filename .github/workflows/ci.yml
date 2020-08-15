@@ -34,22 +34,6 @@ jobs:
         run: |
           echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> dev.env
 
-      - name: Add Environment Variables to prod.env file
-        run: |
-          echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> prod.env
-          echo DIGITAL_OCEAN_IP_ADDRESS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> prod.env
-          echo DB_NAME=${{ secrets.DB_NAME }} >> prod.env
-          echo DB_USER=${{ secrets.DB_USER }} >> prod.env
-          echo DB_PASS=${{ secrets.DB_PASS }} >> prod.env
-          echo DB_HOST=${{ secrets.DB_HOST }} >> prod.env
-          echo DB_PORT=${{ secrets.DB_PORT }} >> prod.env
-          echo DATABASE=${{ secrets.DATABASE }} >> prod.env
-          echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> prod.env
-          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> prod.env
-          echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> prod.env
-          echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> prod.env
-          echo POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} >> prod.env
-
       - name: Set environment variables
         run: |
           echo ::set-env name=WEB_IMAGE::${{ env.WEB_IMAGE }}
@@ -73,7 +57,7 @@ jobs:
       - name: Run Tests and Generate Coverage Report
         env:
           COMPOSE_INTERACTIVE_NO_CLI: 1
-        run: docker-compose exec web pytest --cov=./ --cov-report=xml
+        run: docker-compose exec -T web pytest --cov=./ --cov-report=xml
 
       - name: Upload Coverage Report to Codecov.io
         uses: codecov/codecov-action@v1
@@ -85,10 +69,21 @@ jobs:
       - name: Docker Compose Down
         run: docker-compose down
 
-      - name: Log in to GitHub Packages
-        run: echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add Environment Variables to prod.env file
+        run: |
+          echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> prod.env
+          echo DIGITAL_OCEAN_IP_ADDRESS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> prod.env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> prod.env
+          echo DB_USER=${{ secrets.DB_USER }} >> prod.env
+          echo DB_PASS=${{ secrets.DB_PASS }} >> prod.env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> prod.env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> prod.env
+          echo DATABASE=${{ secrets.DATABASE }} >> prod.env
+          echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> prod.env
+          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> prod.env
+          echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> prod.env
+          echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> prod.env
+          echo POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} >> prod.env
 
       - name: Pull images
         run: |
