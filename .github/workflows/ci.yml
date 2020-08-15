@@ -33,6 +33,11 @@ jobs:
       - name: Add Environment Variables to dev.env file
         run: |
           echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> dev.env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> dev.env
+          echo DB_USER=${{ secrets.DB_USER }} >> dev.env
+          echo DB_PASS=${{ secrets.DB_PASS }} >> dev.env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> dev.env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> dev.env
 
       - name: Set environment variables
         run: |
