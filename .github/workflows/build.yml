@@ -68,3 +68,26 @@ jobs:
         run: |
           docker push ${{ env.WEB_IMAGE }}
           docker push ${{ env.NGINX_IMAGE }}
+
+      - name: Docker Compose Up
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: 1
+        run: docker-compose up -d
+
+      - name: Check Running Containers
+        run: docker-compose ps -a
+
+      - name: Check Logs
+        run: docker-compose logs web
+
+      - name: Run Tests and Generate Coverage Report
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: 1
+        run: docker-compose exec web pytest --cov=./ --cov-report=xml
+
+      - name: Upload Coverage Report to Codecov.io
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          flags: unittests
