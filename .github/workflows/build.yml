@@ -30,6 +30,10 @@ jobs:
           echo COMPOSE_HTTP_TIMEOUT=120 >> .env
           echo DATABASE=${{ secrets.DATABASE }} >> .env
 
+      - name: Add Environment Variables to dev.env file
+        run: |
+          echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> dev.env
+
       - name: Add Environment Variables to prod.env file
         run: |
           echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> prod.env
