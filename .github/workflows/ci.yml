@@ -39,10 +39,10 @@ jobs:
           echo DB_HOST=${{ secrets.DB_HOST }} >> dev.env
           echo DB_PORT=${{ secrets.DB_PORT }} >> dev.env
 
-      - name: Set environment variables
+      - name: Source Environment Variables
         run: |
-          echo ::set-env name=WEB_IMAGE::${{ env.WEB_IMAGE }}
-          echo ::set-env name=NGINX_IMAGE::${{ env.NGINX_IMAGE }}
+          source .env
+          source dev.env
 
       - name: Build Dev Image
         run: |
@@ -89,6 +89,11 @@ jobs:
           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> prod.env
           echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> prod.env
           echo POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} >> prod.env
+
+      - name: Set environment variables
+        run: |
+          echo ::set-env name=WEB_IMAGE::${{ env.WEB_IMAGE }}
+          echo ::set-env name=NGINX_IMAGE::${{ env.NGINX_IMAGE }}
 
       - name: Pull images
         run: |
