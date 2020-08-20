@@ -1,75 +1,75 @@
 - name: "awaiting fix"
   color: "0366d6"
-  description": "Awaiting third party package update"
+  description: "Awaiting third party package update"
 
 - name: "bug"
   color: "d73a4a"
-  description": "Something isn't working"
+  description: "Something isn't working"
 
 - name: "ci"
   color: "cb31ce"
-  description": "Issues relating to the CI Deployment"
+  description: "Issues relating to the CI Deployment"
 
 - name: "config"
   color: "cb31ce"
-  description": "Issues relating to setup and configuration"
+  description: "Issues relating to setup and configuration"
 
 - name: "dependencies"
   color: "0366d6"
-  description": "Pull requests that update a dependency file"
+  description: "Pull requests that update a dependency file"
 
 - name: "deployment"
   color: "cb31ce"
-  description": "Actions and issues relating to deployment"
+  description: "Actions and issues relating to deployment"
 
 - name: "django"
   color: "105438"
-  description": "Issues relating to Django"
+  description: "Issues relating to Django"
 
 - name: "docker"
   color: "37a4f3"
-  description": "Issues relating to Docker"
+  description: "Issues relating to Docker"
 
 - name: "documentation"
   color: "0075ca"
-  description": "Improvements or additions to documentation"
+  description: "Improvements or additions to documentation"
 
 - name: "feature"
   color: "a2eeef"
-  description": "New feature or project enhancement"
+  description: "New feature or project enhancement"
 
 - name: "git"
   color: "292e35"
-  description": "Issues relating to Git and GitHub"
+  description: "Issues relating to Git and GitHub"
 
 - name: "github actions"
   color: "292e35"
-  description": "Issues relating to GitHub Actions"
+  description: "Issues relating to GitHub Actions"
 
 - name: "maintenance"
   color: "cb31ce"
-  description": "Actions and issues relating to maintenance"
+  description: "Actions and issues relating to maintenance"
 
 - name: "planning"
   color: "0075ca"
-  description": "Items improving the project's organisation"
+  description: "Items improving the project's organisation"
 
 - name: "polish"
   color: "74f765"
-  description": "Actions to enhance presentation and overall polish"
+  description: "Actions to enhance presentation and overall polish"
 
 - name: "python"
   color: "2a4e71"
-  description": "Issues relating to Python"
+  description: "Issues relating to Python"
 
 - name: "refactor candidate"
   color: "74f765"
-  description": "Items that could be refactored at a later stage"
+  description: "Items that could be refactored at a later stage"
 
 - name: "software updates"
   color: "ffbf00"
-  description": "Software or package updates"
+  description: "Software or package updates"
 
 - name: "tests"
   color: "93f2ef"
-  description": "Tests to verify project functionality"
+  description: "Tests to verify project functionality"
