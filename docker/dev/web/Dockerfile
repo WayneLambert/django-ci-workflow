@@ -12,6 +12,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Causes all output to stdout to be flushed immediately
 ENV PYTHONUNBUFFERED 1
 
+# Set the COLUMNS variable for the terminal's output width
+ENV COLUMNS 164
+
 # Create and set working directory
 WORKDIR /code
 

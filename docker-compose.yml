@@ -24,6 +24,7 @@ services:
       dockerfile: ./docker/dev/web/Dockerfile
       context: .
     restart: always
+    tty: true
     env_file:
       - .env
       - dev.env
