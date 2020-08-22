@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Create a bug report to help me improve my portfolio
+about: Create a bug report to help me improve the project
 title: ''
 labels: bug
 assignees: WayneLambert
