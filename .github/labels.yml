@@ -62,6 +62,14 @@
   color: "2a4e71"
   description: "Issues relating to Python"
 
+- name: "question"
+  color: "ffbf00"
+  description: "Ask a question about the project"
+
+- name: "regression"
+  color: "d73a4a"
+  description: "Something that isn't working now which used to"
+
 - name: "refactor candidate"
   color: "74f765"
   description: "Items that could be refactored at a later stage"
