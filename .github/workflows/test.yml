@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - ci
+
+jobs:
+
+  test:
+    name: Run Django Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          ref: 'refs/heads/ci'
+
+      - name: Set up Python 3.8.5
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8.5
+
+      - name: Install dependencies
+        run: pipenv install --system --ignore-pipfile --deploy --dev
+
+      - name: Run tests
+        run: pytest --cov=./ --cov-report=xml
+        env:
+          SYSTEM_ENV: GITHUB_WORKFLOW
