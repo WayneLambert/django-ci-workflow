@@ -1,9 +1,9 @@
 name: CI Workflow
 
-on:
-  push:
-    branches:
-      - ci
+# on:
+#   push:
+#     branches:
+#       - ci
 
 env:
   WEB_IMAGE: docker.pkg.github.com/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web:latest

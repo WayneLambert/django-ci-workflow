@@ -49,9 +49,6 @@ jobs:
       - name: Install dependencies
         run: pipenv install --system --ignore-pipfile --deploy --dev
 
-      - name: Activate environment
-        run: pipenv shell
-
       - name: Run tests
         run: pytest --cov=./ --cov-report=xml
         env:
