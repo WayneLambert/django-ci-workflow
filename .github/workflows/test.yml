@@ -34,14 +34,16 @@ jobs:
           echo COMPOSE_HTTP_TIMEOUT=120 >> .env
           echo DATABASE=${{ secrets.DATABASE }} >> .env
 
-      - name: Add Environment Variables to dev.env file
-        run: |
-          echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> dev.env
-          echo DB_NAME=${{ secrets.DB_NAME }} >> dev.env
-          echo DB_USER=${{ secrets.DB_USER }} >> dev.env
-          echo DB_PASS=${{ secrets.DB_PASS }} >> dev.env
-          echo DB_HOST=${{ secrets.DB_HOST }} >> dev.env
-          echo DB_PORT=${{ secrets.DB_PORT }} >> dev.env
+          # ... and variables within the project's `.dev.env` file
+          echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo DB_PASS=${{ secrets.DB_PASS }} >> .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+
+      - name: Set Environment Variables
+        run: for var in `cat env` ; do echo "::set-env name=${var%%=*}::${var##*=}" ; done
 
       - name: Install pipenv
         run: python -m pip install pipenv
