@@ -56,8 +56,13 @@ repos:
       - id: interrogate
         args: [--config=pyproject.toml, -vv]
 
+  - repo: https://github.com/asottile/seed-isort-config
+    rev: v2.2.0
+    hooks:
+      - id: seed-isort-config
+
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.4.1
+    rev: v5.4.2
     hooks:
       - id: isort
         additional_dependencies: [toml]

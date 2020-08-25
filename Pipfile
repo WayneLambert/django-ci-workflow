@@ -18,6 +18,7 @@ django-debug-toolbar = "==2.2"
 ptvsd = "==4.3.2"
 django-bootstrap4 = "==2.2.0"
 rich = "==5.2.0"
+bandit = "==1.6.2"
 
 [packages]
 django = "==3.1"
