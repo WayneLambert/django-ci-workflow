@@ -1,6 +1,6 @@
 # Django CI/CD Workflow
 
-[![codecov](https://codecov.io/gh/WayneLambert/django-ci-workflow/branch/master/graph/badge.svg)](https://codecov.io/gh/WayneLambert/django-ci-workflow)
+[![codecov](https://codecov.io/gh/WayneLambert/django-ci-workflow/branch/ci/graph/badge.svg)](https://codecov.io/gh/WayneLambert/django-ci-workflow)
 
 This repository is intended to be an evolving example of a Django
 starter project that is configured as a bootstrapped template for any
