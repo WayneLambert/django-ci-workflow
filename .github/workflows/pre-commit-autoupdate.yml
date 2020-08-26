@@ -1,10 +1,9 @@
-# Run pre-commit autoupdate every midnight. Create PR in case of changes.
 name: Pre-commit Auto-Update
 
 on:
   schedule:
-  - cron: "0 0 * * *"
-  workflow_dispatch: # to trigger manually
+  - cron: "0 0 * * *"   # Run every day at midnight
+  workflow_dispatch:    # To trigger manually
 
 jobs:
   auto-update:
@@ -24,11 +23,28 @@ jobs:
 
     - name: Only account for changes in pre-commit-config.yaml file
       run: |
+        cat .gitignore > .tmpgitignore
         true > .gitignore
         echo !.pre-commit-config.yaml >> .gitignore
-        echo .gitignore >> .gitignore
 
-    - name: Create Pull Request
+    - name: Create PR
+      uses: peter-evans/create-pull-request@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: update/pre-commit-autoupdate
+        title: Auto-update pre-commit hooks
+        commit-message: Auto-update pre-commit hooks
+        body: Update tools in pre-commit config to latest versions.
+        labels:  dependencies, ci
+        reviewers: WayneLambert
+        assignees: WayneLambert
+
+    - name: Rebuild original .gitignore file
+      run: |
+        cat .tmpgitignore > .gitignore
+        rm .tmpgitignore
+
+    - name: Create PR again (supersedes previous)
       uses: peter-evans/create-pull-request@v2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
