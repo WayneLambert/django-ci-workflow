@@ -38,20 +38,6 @@ jobs:
         labels:  dependencies, ci
         reviewers: WayneLambert
         assignees: WayneLambert
-
-    - name: Rebuild original .gitignore file
       run: |
         cat .tmpgitignore > .gitignore
         rm .tmpgitignore
-
-    - name: Create PR again (supersedes previous)
-      uses: peter-evans/create-pull-request@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: update/pre-commit-autoupdate
-        title: Auto-update pre-commit hooks
-        commit-message: Auto-update pre-commit hooks
-        body: Update tools in pre-commit config to latest versions.
-        labels:  dependencies, ci
-        reviewers: WayneLambert
-        assignees: WayneLambert
