@@ -1,12 +1,9 @@
-# Run pre-commit autoupdate every day at midnight
-# and create a pull request if any changes
-
-
-name: Pre-commit auto-update
+# Run pre-commit autoupdate every midnight. Create PR in case of changes.
+name: Pre-commit Auto-Update
 
 on:
   schedule:
-  - cron: "30 * * * *"
+  - cron: "0 0 * * *"
   workflow_dispatch: # to trigger manually
 
 jobs:
@@ -37,7 +34,7 @@ jobs:
         branch: update/pre-commit-autoupdate
         title: Auto-update pre-commit hooks
         commit-message: Auto-update pre-commit hooks
-        body: Update versions of tools in pre-commit config to latest versions.
-        labels: update, dependencies, ci
+        body: Update tools in pre-commit config to latest versions.
+        labels:  dependencies, ci
         reviewers: WayneLambert
         assignees: WayneLambert
