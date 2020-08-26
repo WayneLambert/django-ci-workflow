@@ -22,11 +22,11 @@ jobs:
       working-directory: .
       run: pre-commit autoupdate
 
-    - name: Add .gitignore exclusions
+    - name: Only account for changes in pre-commit-config.yaml file
       run: |
-        echo static/* >> .gitignore
-        echo staticfiles/* >> .gitignore
-        echo .gitignore >> .gitignore
+        true > .gitignore
+        echo * >> .gitignore
+        echo !.pre-commit-config.yaml >> .gitignore
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2
