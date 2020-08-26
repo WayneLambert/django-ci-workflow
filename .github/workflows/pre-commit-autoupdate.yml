@@ -38,6 +38,3 @@ jobs:
         labels:  dependencies, ci
         reviewers: WayneLambert
         assignees: WayneLambert
-      run: |
-        cat .tmpgitignore > .gitignore
-        rm .tmpgitignore
