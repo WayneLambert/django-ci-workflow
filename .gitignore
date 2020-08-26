@@ -334,3 +334,5 @@ staticfiles/django_extensions/img/indicator.gif
 staticfiles/django_extensions/js/jquery.ajaxQueue.js
 staticfiles/django_extensions/js/jquery.autocomplete.js
 staticfiles/django_extensions/js/jquery.bgiframe.js
+static/*
+staticfiles/*
