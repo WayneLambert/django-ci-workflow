@@ -7,8 +7,8 @@
   description: "Something isn't working"
 
 - name: "ci"
-  color: "cb31ce"
-  description: "Issues relating to the CI Deployment"
+  color: "292e35"
+  description: "Issues relating to CI"
 
 - name: "config"
   color: "cb31ce"
