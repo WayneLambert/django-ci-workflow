@@ -34,7 +34,7 @@ repos:
         exclude: "[a-zA-Z]*/(migrations|tests)/(.)*"
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.3
+    rev: 3.8.4
     hooks:
       - id: flake8
 
@@ -62,7 +62,7 @@ repos:
       - id: seed-isort-config
 
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.4.2
+    rev: v5.5.4
     hooks:
       - id: isort
         additional_dependencies: [toml]
@@ -74,7 +74,7 @@ repos:
         exclude: ^docs/conf.py
 
   - repo: https://github.com/prettier/prettier
-    rev: 2.1.1
+    rev: 2.1.2
     hooks:
       - id: prettier
         args: [--prose-wrap=always, --print-width=99]
