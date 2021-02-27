@@ -15,6 +15,15 @@ ENV PYTHONUNBUFFERED 1
 # Set the COLUMNS variable for the terminal's output width
 ENV COLUMNS 164
 
+# Install Watchman File Watching Service
+RUN cd /tmp \
+    && git clone https://github.com/facebook/watchman.git -b v4.9.0 --depth 1 \
+    && cd watchman \
+    && ./autogen.sh \
+    && ./configure --enable-statedir=/tmp --enable-lenient --without-pcre \
+    && make -j6 \
+    && make install
+
 # Create and set working directory
 WORKDIR /code
 
