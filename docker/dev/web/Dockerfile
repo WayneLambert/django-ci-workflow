@@ -1,9 +1,9 @@
 # Official Python runtime as the base image
-FROM python:3.8.5-buster
+FROM python:3.9.2-buster
 
 # Add metadata to the image
 LABEL author="Wayne Lambert <contact@waynelambert.dev>" \
-    version="2020.08" \
+    version="2021.03" \
     description="Docker image for CI workflow."
 
 # Prevents Python from writing .pyc files
@@ -13,7 +13,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Set the COLUMNS variable for the terminal's output width
-ENV COLUMNS 164
+ENV COLUMNS 143
 
 # Install Watchman File Watching Service
 RUN cd /tmp \

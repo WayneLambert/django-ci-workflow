@@ -1,9 +1,9 @@
 # Use official Postgres image as the base image
-FROM postgres:12.2-alpine
+FROM postgres:13.2
 
 # Add metadata to the image
 LABEL dev.waynelambert.author="Wayne Lambert <contact@waynelambert.dev>" \
-    dev.waynelambert.version="2020.08" \
+    dev.waynelambert.version="2021.03" \
     dev.waynelambert.description="Docker image for postgres service"
 
 # Run the rest of the commands as the 'postgres' user

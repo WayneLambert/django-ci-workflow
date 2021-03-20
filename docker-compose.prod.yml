@@ -1,8 +1,8 @@
-version: "3.7"
+version: "3.8"
 
 services:
   web:
-    image: "${WEB_IMAGE}"
+    image: ${COMPOSE_PROJECT_NAME}_web_prod
     volumes:
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
@@ -15,7 +15,7 @@ services:
   nginx:
     depends_on:
       - web
-    image: "${NGINX_IMAGE}"
+    image: ${COMPOSE_PROJECT_NAME}_nginx_prod
     volumes:
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
