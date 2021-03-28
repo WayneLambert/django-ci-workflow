@@ -50,12 +50,23 @@ CACHES = {
 
 # Do not log static request files to the console
 def skip_static_requests(record):
-    return not record.args[0].startswith('GET /static/')
+    return not str(record.args[0]).startswith('GET /static/')
 
 # Do not log debug request files to the console
 def skip_debug_requests(record):
-    return not record.args[0].startswith('GET /__debug__/')
+    return not str(record.args[0]).startswith('GET /__debug__/')
 
+# Django Shell Plus Additional Imports
+SHELL_PLUS_IMPORTS = [
+    'import pathlib',
+    'import sys',
+    'import os',
+    'import datetime',
+    'import re',
+    'from rich import inspect, pretty, print',
+]
+
+# Logging Configuration (including colorised output from Rich)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
