@@ -27,14 +27,28 @@ RUN cd /tmp \
 # Create and set working directory
 WORKDIR /code
 
-# Upgrade Pip, then install pipenv from PyPI
-RUN pip install --upgrade pip && pip install pipenv
+# Upgrade Pip
+RUN pip install --upgrade pip
 
-# Copy local pipenv files to container
-COPY Pipfile Pipfile.lock /code/
+# Set Poetry version
+ENV POETRY_VERSION=1.1.5
+ENV POETRY_HOME="/opt/poetry"
+ENV POETRY_VIRTUALENVS_IN_PROJECT=true
+ENV POETRY_NO_INTERACTION=1
+ENV VENV_PATH="/.venv"
 
-# Install project dependencies using exact versions in Pipfile.lock
-RUN pipenv install --system --ignore-pipfile --deploy --dev
+# prepend poetry and venv to path
+ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
+
+# Install Poetry
+# install poetry - respects $POETRY_VERSION & $POETRY_HOME
+RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+
+# Copy poetry.lock and pyproject.toml files into working directory
+COPY pyproject.toml .
+
+# Install project dependencies
+RUN poetry install --no-dev --no-ansi
 
 # Copy local source code directory to container's `code` directory
 COPY . .
