@@ -36,6 +36,7 @@ services:
       - .:/code/
     ports:
       - "8003:8003"
+      - "8890:8890"
     networks:
       - backend
 
